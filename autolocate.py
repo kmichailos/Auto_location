@@ -125,7 +125,7 @@ def autolocate_kpick_output(sfile_dir, final_loc_dir, few_picks_dir,
     Function to autolocate sfiles using SEISAN's hypocenter. The autolocation
     is carried out iteratively removing the picks with the highest residuals
     until some quality criteria are met.
-    
+
     Arguments:
         sfile_dir {str} -- Directory that contains sfiles for location
         final_loc_dir {str} -- Directory to store the final locations
@@ -135,7 +135,7 @@ def autolocate_kpick_output(sfile_dir, final_loc_dir, few_picks_dir,
         S_num {int} -- Number of S-wave phases
         EQ_RMS {float} -- Minimum RMS
     """
-    sfile_dir='/Users/home/michaiko/test/sfiles/' 
+    sfile_dir='/Users/home/michaiko/test/sfiles/'
     sfile_list = []
     sfile_list = glob.glob(sfile_dir + '/*')
     sfile_list.sort()
@@ -186,7 +186,7 @@ def autolocate_kpick_output(sfile_dir, final_loc_dir, few_picks_dir,
                 # number of P-wave picks and/or S-wave picks or picks from
                 # different seismic sites.
                 if len(P_picks_left) <= P_num and len(S_picks_left) <= S_num:
-                    
+
                     print('Location has {} P-wave picks and {} S-wave picks'
                           ', exiting...'.format(len(P_picks_left),
                                                 len(S_picks_left)))
