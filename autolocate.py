@@ -25,10 +25,10 @@ import warnings
 from obspy.io.nordic.core import write_select
 import sys
 from obspy.io.nordic.core import read_nordic
-from obspy.io.nordic.core import readheader
-from obspy.io.nordic.core import nordpick
+# from obspy.io.nordic.core import readheader
+# from obspy.io.nordic.core import nordpick
 from obspy.io.nordic.core import readwavename
-import numpy as np
+
 
 def quakeml2sfiles(xml_dir, mseed_dir, sfile_dir):
     """
@@ -135,7 +135,8 @@ def autolocate_kpick_output(sfile_dir, final_loc_dir, few_picks_dir,
         S_num {int} -- Number of S-wave phases
         EQ_RMS {float} -- Minimum RMS
     """
-    sfile_dir='/Users/home/michaiko/test/sfiles/'
+    # Beware of hard code
+    sfile_dir = '/Users/home/michaiko/test/sfiles/'
     sfile_list = []
     sfile_list = glob.glob(sfile_dir + '/*')
     sfile_list.sort()
@@ -199,7 +200,7 @@ def autolocate_kpick_output(sfile_dir, final_loc_dir, few_picks_dir,
                 returned_str = subprocess.check_output(['hyp', 'hyp.out'])
                 if 'no result' in returned_str:
                     warnings.warn('Cannot locate event, trying as regional')
-                    write_select(event, outdir + 'hyp.out', 'KPIC',
+                    write_select(event, final_loc_dir + 'hyp.out', 'KPIC',
                                  'R', wavefiles)
                     returned_str = subprocess.check_output(['hyp', 'hyp.out'])
                     if 'no result' in returned_str:
