@@ -1,5 +1,6 @@
 """
-Script to run pseudo-automatic location process that is carried out iteratively
+Script to run pseudo-automatic earthquake location. Reads the outputs of the 
+automatic phase picker kpick. The process is carried out iteratively
 whereby we remove picks with the highest residuals at each iteration until
 quality criteria are met:
 1) minimum number of P-wave picks
@@ -35,13 +36,15 @@ def quakeml2sfiles(xml_dir, mseed_dir, sfile_dir):
     Function to match .xml and .mseed files and write out sfiles to a given
     output directory. (.xml and .mseed files should have the same filenames).
 
-    Arguments:
-        xml_dir   {str} -- path to the .xml files
-        mseed_dir {str} -- path to the .mseed files
-        outdir    {str} -- path to write the sfiles
+    :type xml_dir: str
+    :param xml_dir: path to *.xml files
+    :type mseed_dir: str
+    :param mseed_dir: path to *.mseed files
+    :type outdir: str
+    :param outdir: path to write the sfiles
     """
 
-    # List of QuakeML files
+    # list of QuakeML files
     quakeml_list = glob.glob(xml_dir + '2010-04*.xml')
     quakeml_list.sort()
     print('.xml list created')
@@ -55,7 +58,7 @@ def quakeml2sfiles(xml_dir, mseed_dir, sfile_dir):
     # strips file extension and path from filename
     mlist3 = [mlist2.strip('.MSEED') for mlist2 in mseed_list]
     mlist5 = [mlist4.split('/')[-1] for mlist4 in mlist3]
-    # the same thing as above
+    # same as above
     flist3 = [flist2.strip('.xml') for flist2 in quakeml_list]
     flist5 = [flist4.split('/')[-1] for flist4 in flist3]
 
@@ -72,7 +75,7 @@ def quakeml2sfiles(xml_dir, mseed_dir, sfile_dir):
                         continue
                 else:
                     continue
-    # Remove the elements that are not in both lists
+    # remove the elements that are not in both lists
     for elm in mlist5:  # elm = element
         if elm not in common:
             mseed_list.remove(mseed_dir + elm +
@@ -90,7 +93,7 @@ def quakeml2sfiles(xml_dir, mseed_dir, sfile_dir):
     elif len(quakeml_list) == len(mseed_list):
         print('Mseed & Quakeml lists match: Continue')
 
-    # loop over ipythoneach QuakeML file and mseed fileevent[0]
+    # loop over ipython each QuakeML file and mseed fileevent[0]
     for eventxml, eventmseed in zip(quakeml_list, mseed_list):
         print 'Reading event: %s ' % eventxml
         event = read_events(eventxml)
@@ -126,14 +129,19 @@ def autolocate_kpick_output(sfile_dir, final_loc_dir, few_picks_dir,
     is carried out iteratively removing the picks with the highest residuals
     until some quality criteria are met.
 
-    Arguments:
-        sfile_dir {str} -- Directory that contains sfiles for location
-        final_loc_dir {str} -- Directory to store the final locations
-        few_picks_dir {str} -- Directory to store the locations that failed to
-                               meet the criteria
-        P_num {int} -- Number of P-wave phases
-        S_num {int} -- Number of S-wave phases
-        EQ_RMS {float} -- Minimum RMS
+    
+    :type sfile_dir: str
+    :param sfile_dir: directory that contains sfiles to be located
+    :type final_loc_dir: str
+    :param final_loc_dir: directory to store sfiles for location
+    :type few_picks_dir: str
+    :param few_picks_dir: directory to store locations that failed to meet the criteria
+    :type P_num: int
+    :param P_num: number of P-wave picks
+    :type S_num: int
+    :param S_num: number of S-wave picks
+    :type EQ_RMS: float
+    :param EQ_RMS: minimum rms of the earthquake location
     """
     # Beware of hard code
     sfile_dir = '/Users/home/michaiko/test/sfiles/'
