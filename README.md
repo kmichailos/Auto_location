@@ -10,4 +10,4 @@ Give examples
 ```
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Konstantinos Michailos** 
